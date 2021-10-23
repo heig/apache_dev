@@ -1,5 +1,7 @@
 FROM ubuntu:latest
 
+LABEL version="1.1"
+
 MAINTAINER HAN
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -10,16 +12,16 @@ RUN apt-get update
 RUN apt-get install -y software-properties-common && add-apt-repository ppa:ondrej/php && apt-get update
 RUN apt-get install -y curl
 
-# Install PHP 7.1
-RUN apt-get --allow-unauthenticated install  php7.1 php7.1-mysql php7.1-mcrypt php7.1-cli php7.1-gd php7.1-curl php7.1-mbstring php7.1-xml php7.1-zip php-sqlite3 -y
+# Install PHP 7.4
+RUN apt-get --allow-unauthenticated install  php7.4 php7.4-mysql php7.4-mcrypt php7.4-cli php7.4-gd php7.4-curl php7.4-mbstring php7.4-xml php7.4-zip php-sqlite3 -y
 
 # Enable apache mods.
-RUN a2enmod php7.1
+RUN a2enmod php7.4
 RUN a2enmod rewrite
 
 # Update the PHP.ini file, enable <? ?> tags and quieten logging.
-RUN sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php/7.1/apache2/php.ini
-RUN sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php/7.1/apache2/php.ini
+RUN sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php/7.4/apache2/php.ini
+RUN sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php/7.4/apache2/php.ini
 
 # Manually set up the apache environment variables
 ENV APACHE_LOG_DIR /var/log/apache2
